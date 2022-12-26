@@ -5,7 +5,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 // routes
-const userRoutes = require("./routes/user");
+const userRoutes = require("./routes/auth");
+const adminRoutes = require("./routes/admin/auth");
 // environment variables
 env.config();
 // mondoDB connection
@@ -28,7 +29,14 @@ mongoose
     console.log("database not connected", err);
   });
 app.use(bodyParser());
+// app.use(
+//   bodyParser.urlencoded({
+//     extended: true,
+//   })
+// );
 app.use("/api", userRoutes);
+app.use("/api", adminRoutes);
+
 app.listen(process.env.PORT, () => {
   console.log(`server is running on port ${process.env.PORT}`);
 });
